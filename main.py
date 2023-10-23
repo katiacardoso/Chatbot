@@ -14,9 +14,12 @@ import torch
 from transformers import BertTokenizer, BertModel
 #pip install -U scikit-learn
 from sklearn.metrics.pairwise import cosine_similarity
+from flask import Flask, render_template, request
 
 
 #import json 
+
+#pip install Flask
 
 #importação dos dados
 url = 'https://raw.githubusercontent.com/katiacardoso/EMAP_Chatbot/main/perguntas_respostass.csv'
@@ -62,6 +65,11 @@ with open('perguntas_respostas.json', 'r', encoding='utf-8') as json_file:
 # Extrair perguntas e respostas
 perguntas = [qa['pergunta'] for qa in data]
 respostas = [qa['resposta'] for qa in data]
+
+
+app = Flask(__name__,template_folder='templates')
+
+
 # Função para vetorizar texto usando BERT
 def vetorizar_texto(texto):
     inputs = tokenizer(texto, return_tensors='pt', padding=True, truncation=True)
@@ -82,7 +90,24 @@ def chatbot(user_input):
     resposta = respostas[best_match_index]
     return resposta
 
-# Lista para armazenar as perguntas e respostas
+# Rota para a página inicial
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Rota para processar a entrada do usuário e retornar a resposta do chatbot
+@app.route('/get_response', methods=['POST'])
+def get_response():
+    user_input = request.form['user_input']
+    response = chatbot(user_input)
+    return render_template('index.html', user_input=user_input, response=response)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+'''# Lista para armazenar as perguntas e respostas
 conversa = []
 
 # Inicie uma conversa com o chatbot
@@ -99,5 +124,5 @@ while True:
 
     # Salve a lista como JSON em um arquivo
     with open('conversa.json', 'a', encoding='utf-8') as json_file:
-        json.dump(conversa, json_file, ensure_ascii=False, indent=4)
+        json.dump(conversa, json_file, ensure_ascii=False, indent=4)'''
 

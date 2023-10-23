@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chatbot</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <h1>Bem-vindo ao Chatbot!</h1>
+    <p>Faça uma pergunta para começar.</p>
+    <form method="post" action="/get_response">
+      <label for="user_input">Você:</label>
+      <input type="text" id="user_input" name="user_input">
+      <button type="submit">Enviar</button>
+    </form>
+    {% if user_input %}
+      <p><strong>Você:</strong> {{ user_input }}</p>
+    {% endif %}
+    {% if response %}
+      <p><strong>Chatbot:</strong> {{ response }}</p>
+    {% endif %}
+  </body>
+</html>

@@ -4,20 +4,33 @@
     <meta charset="utf-8">
     <title>Chatbot</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static\styles.css">
   </head>
+
   <body>
-    <h1>Bem-vindo ao Chatbot!</h1>
-    <p>Faça uma pergunta para começar.</p>
-    <form method="post" action="/get_response">
-      <label for="user_input">Você:</label>
-      <input type="text" id="user_input" name="user_input">
-      <button type="submit">Enviar</button>
-    </form>
-    {% if user_input %}
-      <p><strong>Você:</strong> {{ user_input }}</p>
-    {% endif %}
-    {% if response %}
-      <p><strong>Chatbot:</strong> {{ response }}</p>
-    {% endif %}
+    <div>
+      <h1>Perguntas e Respostas - Porto do Itaqui</h1>
+      <p>Estamos aqui para ajudá-lo. Como posso auxiliá-lo hoje?</p>
+      <form id="chatbot-form"  method="post" action="/get_response">
+        <input type="text" id="user_input" name="user_input">
+        <button  type="submit">Enviar</button>
+      </form>
+    </div>
+    
+    <div class="chatbot-results" style="display: none;">
+      {% if user_input %}
+        <p><strong>Você:</strong> {{ user_input }}</p>
+      {% endif %}
+      {% if response %}
+        <p><strong>Chatbot:</strong> {{ response }}</p>
+      {% endif %}
+    </div>
+    <footer>
+      <div class="footer-content">
+          <p>Estamos dedicados a aprimorar nosso Chatbot! Se a resposta não atender às suas expectativas, por favor, reformule sua pergunta. Agradecemos por sua paciência e compreensão durante este processo de desenvolvimento.</p>
+      </div>
+    </footer>
+    <!-- Código JavaScript para mostrar a caixa .chatbot-results quando o botão é pressionado -->
+    <script src="/static/script.js"></script>
   </body>
 </html>

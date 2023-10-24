@@ -16,7 +16,6 @@ from transformers import BertTokenizer, BertModel
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, render_template, request
 
-
 #import json 
 
 #pip install Flask
@@ -90,6 +89,9 @@ def chatbot(user_input):
     resposta = respostas[best_match_index]
     return resposta
 
+#Isso garantirá que o Flask aceite solicitações com conteúdo JSON
+app.config['JSON_AS_ASCII'] = False
+
 # Rota para a página inicial
 @app.route('/')
 def index():
@@ -98,9 +100,14 @@ def index():
 # Rota para processar a entrada do usuário e retornar a resposta do chatbot
 @app.route('/get_response', methods=['POST'])
 def get_response():
-    user_input = request.form['user_input']
+    '''user_input = request.form['user_input']
     response = chatbot(user_input)
-    return render_template('index.html', user_input=user_input, response=response)
+    #return render_template('index.html', user_input=user_input, response=response)
+    return response'''
+    data = request.get_json()  # Obter dados JSON da requisição
+    user_input = data.get('user_input', '')  # Obter 'user_input' do JSON
+    response = chatbot(user_input)  # Obter resposta do chatbot
+    return  response  # Retornar resposta como uma string simples
 
 if __name__ == '__main__':
     app.run(debug=True)

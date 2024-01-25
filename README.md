@@ -1,4 +1,4 @@
-# Projeto de Chatbot para Empresa Maranhense de Administração Portuária - EMAP
+# Projeto de Chatbot para respostas automatizadas
 > Implementado por : Katia Cardoso
 
 Este repositório contém um código para criar um chatbot de perguntas e respostas usando o modelo BERT. 
